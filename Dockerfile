@@ -10,7 +10,6 @@ COPY . /go/src/app
 WORKDIR /go/src/app
 #RUN go build -ldflags="-w -s" main.go
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o /go/bin/robots-disallow
-RUN ls /go/bin
 FROM scratch
 # Copy our static executable
 COPY --from=builder /go/bin/robots-disallow /robots-disallow
