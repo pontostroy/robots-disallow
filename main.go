@@ -9,6 +9,8 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"regexp"
@@ -17,10 +19,11 @@ import (
 )
 
 var version = "0.2.1-dev"
-var content = "User-agent: *\nDisallow: /\n"
+
+//var content = "User-agent: *\nDisallow: /\n"
 
 var opts struct {
-	Listen  string `long:"listen" description:"address to listen on" default:"0.0.0.0:8080" env:"ROBOTS_DISALLOW_LISTEN"`
+	Listen  string `long:"listen" description:"address to listen on" default:"0.0.0.0:9070" env:"ROBOTS_DISALLOW_LISTEN"`
 	Version bool   `long:"version" short:"v" description:"show version number"`
 }
 
@@ -32,7 +35,12 @@ type handler struct {
 }
 
 func (h *handler) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
-	_, err := rw.Write([]byte(content))
+	bytes, err := ioutil.ReadFile("robots.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	rw.Write(bytes)
 	if err != nil {
 		http.Error(rw, err.Error(), http.StatusInternalServerError)
 	}

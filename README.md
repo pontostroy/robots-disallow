@@ -18,7 +18,7 @@ robots-disallow implements a http server serving content of a robots.txt file di
       robots-disallow [OPTIONS]
 
     Application Options:
-          --listen=  address to listen on (default: 0.0.0.0:8080) [$ROBOTS_DISALLOW_LISTEN]
+          --listen=  address to listen on (default: 0.0.0.0:9070) [$ROBOTS_DISALLOW_LISTEN]
       -v, --version  show version number
 
     Help Options:
@@ -28,10 +28,9 @@ robots-disallow implements a http server serving content of a robots.txt file di
     docker run -p 8080:8080 wikiwi/robots-disallow
 
 ## Output
-    curl localhost:8080
+    curl localhost:9070
     User-agent: *
     Disallow: /
 
 ## Docker Hub
 Automated build is available at the [Docker Hub](https://hub.docker.com/r/wikiwi/robots-disallow).
-
